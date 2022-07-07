@@ -1,4 +1,6 @@
 <main class="content">
-  <app-formulario-cadastro>
+  <h1>Cadastro de Usuários</h1>
+  <app-formulario-cadastro style="width: 100%" (emmitUsuario)="insertTable($event)">
   </app-formulario-cadastro>
+  <!-- <app-table [data]="dataSetUsuarios"></app-table> -->
 </main>

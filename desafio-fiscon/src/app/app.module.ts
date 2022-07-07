@@ -8,18 +8,21 @@ import {MatInputModule} from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FormularioCadastroComponent } from './components/formulario-cadastro/formulario-cadastro.component';
 import { HomeComponent } from './pages/home/home.component';
+import { TableComponent } from './components/table/table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FormularioCadastroComponent,
-    HomeComponent
+    HomeComponent,
+    TableComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import { HomeComponent } from './pages/home/home.component';
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

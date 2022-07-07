@@ -1,3 +1,4 @@
+import { IUsuario } from './../../shared/models/Usuario';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  dataSetUsuarios: IUsuario[] = [];
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  insertTable(usuario: IUsuario){
+    this.dataSetUsuarios.push(usuario);
   }
 
 }

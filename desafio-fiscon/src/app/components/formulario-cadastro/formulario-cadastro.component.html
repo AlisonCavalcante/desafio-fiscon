@@ -1,14 +1,47 @@
-<form class="form">
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Nome</mat-label>
-    <input matInput placeholder="Nome" />
-  </mat-form-field>
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Nome</mat-label>
-    <input matInput placeholder="Telefone" />
-  </mat-form-field>
-  <div>
-    <button class="button" mat-raised-button color="primary">Primary</button>
-    <button class="button" mat-raised-button color="accent">Accent</button>
+<div class="content" >
+  <div class="content-card">
+    <mat-card  class="mat-elevation-z8">
+      <form [formGroup]="form" (ngSubmit)="salvar()" class="form ">
+        <h4 class="title">Cadastro</h4>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Nome</mat-label>
+          <input formControlName="nome" matInput />
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Telefone</mat-label>
+          <input type="tel" formControlName="telefone" matInput />
+        </mat-form-field>
+        <div class="content-button">
+          <button type="submit" class="button" mat-raised-button color="primary">Salvar</button>
+          <button class="button" (click)="resetForm()" mat-raised-button color="accent">Limpar</button>
+        </div>
+      </form>
+    </mat-card>
   </div>
-</form>
+
+  <div class="content-table">
+    <mat-form-field>
+      <mat-label>Filtro</mat-label>
+      <input matInput (keyup)="filter($event)" placeholder="Ex. Rodrigo" #input>
+    </mat-form-field>
+    <table #tableUsuarios mat-table matSort  [dataSource]="data" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+          <th class="th" mat-header-cell mat-sort-header *matHeaderCellDef>Id</th>
+          <td class="th" mat-cell *matCellDef="let element">{{ element?.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="nome">
+          <th class="th" mat-header-cell  *matHeaderCellDef>Nome</th>
+          <td class="th" mat-cell *matCellDef="let element">{{ element?.nome }}</td>
+      </ng-container>
+      <ng-container matColumnDef="telefone">
+        <th class="th" mat-header-cell *matHeaderCellDef>Telefone</th>
+        <td class="th" mat-cell *matCellDef="let element">{{ element?.telefone }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+
+
+</div>
