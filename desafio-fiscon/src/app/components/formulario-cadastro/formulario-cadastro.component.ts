@@ -28,6 +28,7 @@ export class FormularioCadastroComponent implements OnInit {
   displayedColumns: string[] = ['id','nome', 'telefone', 'action'];
   dataSource!: MatTableDataSource<any>;
   isEdit: boolean = false;
+  userEdit!: IUsuario;
   constructor(private formBuilder: FormBuilder) {
   }
 
@@ -54,15 +55,26 @@ export class FormularioCadastroComponent implements OnInit {
     if (this.form.valid && !this.isEdit) {
       const user = this.initMock();
       this.data.push(user);
-      this.tableUsuarios.renderRows();
-      this.resetForm();
+      this.render()
     } else if(this.form.valid && this.isEdit){
-      const user = this.initMock();
-      console.log(user)
-      this.edit(user);
-      this.tableUsuarios.renderRows();
-      this.resetForm();
+      let user = this.initMock(this.userEdit)
+       this.data.map( (value, index) => {
+            if(value.id == user.id){
+              this.data.splice(index,1, user)
+            }
+          })
+       this.render();
+       this.modifyEdit();
     }
+  }
+
+  render(){
+    this.tableUsuarios.renderRows();
+    this.resetForm();
+  }
+
+  modifyEdit(){
+    this.isEdit = !this.isEdit;
   }
 
   delete(id: number){
@@ -79,15 +91,8 @@ export class FormularioCadastroComponent implements OnInit {
       nome: usuario.nome,
       telefone:usuario.telefone
     })
-    this.isEdit = true;
-    const user = this.initMock(usuario);
-    this.data.map( (value, index) => {
-      if(value.id == user.id){
-        this.data.splice(index,0, user)
-        this.tableUsuarios.renderRows();
-      }
-    })
-
+    this.modifyEdit();
+    this.userEdit = usuario;
   }
 
   cancelUpdate(){
@@ -102,14 +107,12 @@ export class FormularioCadastroComponent implements OnInit {
     };
     this.idIncremente += 1;
     if(this.isEdit){
-      // if(usuario)
-      // this.idIncremente = usuario?.id
+       if(usuario)
+       this.idIncremente = usuario?.id
     }
-
     teste.id = this.idIncremente;
     teste.nome = this.form.get('nome')?.value;
     teste.telefone = this.form.get('telefone')?.value;
-
     return teste;
   }
 
