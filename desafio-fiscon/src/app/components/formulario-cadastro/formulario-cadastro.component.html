@@ -1,7 +1,7 @@
-<div class="content" >
+<div class="content">
   <div class="content-card">
-    <mat-card  class="mat-elevation-z8">
-      <form [formGroup]="form" (ngSubmit)="salvar()" class="form ">
+    <mat-card class="mat-elevation-z8">
+      <form [formGroup]="form" (ngSubmit)="salvar()" class="form">
         <h4 class="title">Cadastro</h4>
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Nome</mat-label>
@@ -12,36 +12,100 @@
           <input type="tel" formControlName="telefone" matInput />
         </mat-form-field>
         <div class="content-button">
-          <button type="submit" class="button" mat-raised-button color="primary">Salvar</button>
-          <button class="button" (click)="resetForm()" mat-raised-button color="accent">Limpar</button>
+          <button
+          *ngIf="!isEdit"
+            type="submit"
+            class="button"
+            mat-raised-button
+            color="primary"
+          >
+            Salvar
+          </button>
+          <button
+            class="button"
+            type="submit"
+            *ngIf="isEdit"
+            mat-raised-button
+            color="primary"
+          >
+            Update
+          </button>
+          <button
+          *ngIf="!isEdit"
+            class="button"
+            (click)="resetForm()"
+            mat-raised-button
+            color="accent"
+          >
+            Limpar
+          </button>
+          <button
+          *ngIf="isEdit"
+            class="button"
+            (click)="cancelUpdate()"
+            mat-raised-button
+            color="accent"
+          >
+            Cancelar
+          </button>
         </div>
       </form>
     </mat-card>
   </div>
 
   <div class="content-table">
-    <mat-form-field>
+    <mat-form-field class="filtro">
       <mat-label>Filtro</mat-label>
-      <input matInput (keyup)="filter($event)" placeholder="Ex. Rodrigo" #input>
+      <input
+        matInput
+        (keyup)="filter($event)"
+        placeholder="Ex. Rodrigo"
+        #input
+      />
+
     </mat-form-field>
-    <table #tableUsuarios mat-table matSort  [dataSource]="data" class="mat-elevation-z8">
+    <table
+      #tableUsuarios
+      mat-table
+      matSort
+      [dataSource]="dataSource"
+      class="mat-elevation-z8"
+    >
       <ng-container matColumnDef="id">
-          <th class="th" mat-header-cell mat-sort-header *matHeaderCellDef>Id</th>
-          <td class="th" mat-cell *matCellDef="let element">{{ element?.id }}</td>
+        <th class="th" mat-header-cell mat-sort-header *matHeaderCellDef>Id</th>
+        <td class="th" mat-cell *matCellDef="let element">{{ element?.id }}</td>
       </ng-container>
       <ng-container matColumnDef="nome">
-          <th class="th" mat-header-cell  *matHeaderCellDef>Nome</th>
-          <td class="th" mat-cell *matCellDef="let element">{{ element?.nome }}</td>
+        <th class="th" mat-header-cell mat-sort-header *matHeaderCellDef>
+          Nome
+        </th>
+        <td class="th" mat-cell *matCellDef="let element">
+          {{ element?.nome }}
+        </td>
       </ng-container>
       <ng-container matColumnDef="telefone">
         <th class="th" mat-header-cell *matHeaderCellDef>Telefone</th>
-        <td class="th" mat-cell *matCellDef="let element">{{ element?.telefone }}</td>
+        <td class="th" mat-cell *matCellDef="let element">
+          {{ element?.telefone }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th class="th" mat-header-cell *matHeaderCellDef>Ação</th>
+        <td class="th" mat-cell *matCellDef="let element">
+          <button (click)="edit(element)" mat-icon-button color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button (click)="delete(element.id)" mat-icon-button color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page of data"
+    ></mat-paginator>
   </div>
-
-
-
 </div>

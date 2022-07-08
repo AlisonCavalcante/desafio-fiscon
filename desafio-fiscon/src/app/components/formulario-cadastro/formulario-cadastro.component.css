@@ -20,13 +20,17 @@
   margin: 10px;
 }
 
+.filtro{
+  width: 100%;
+}
+
 .th{
   padding: 30px;
   text-align: center;
 }
 
 .content-table{
-  margin-top: 5%;
+
 }
 .mat-column-id {
  border-right : 1px solid currentColor;
